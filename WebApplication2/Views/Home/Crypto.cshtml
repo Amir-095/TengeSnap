@@ -1,0 +1,129 @@
+﻿@using System.Linq;
+@{
+    ViewData["Title"] = "Криптовалюта";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Криптовалюта</th>
+            <th scope="col">Цена</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Bitcoin</td>
+            <td class='price'>---</td>
+        </tr>
+        <tr id="ethereumRow">
+            <td>Ethereum</td>
+            <td class='eth-price'>---</td>
+        </tr>
+         <tr id="tetherRow">
+            <td>Tether</td>
+            <td class='tht-price'>---</td>
+        </tr>
+        <tr id="SolanaRow">
+            <td>Solana</td>
+            <td class='sln-price'>---</td>
+        </tr>
+        <tr id="XRPRow">
+            <td>XRP</td>
+            <td class='xrp-price'>---</td>
+        </tr>
+        <tr id="DogecoinRow">
+            <td>Dogecoin</td>
+            <td class='dgc-price'>---</td>
+        </tr>
+    </tbody>
+</table>
+<script>
+    var btcPrice = document.querySelector('.price');
+    var ethPrice = document.querySelector('.eth-price');
+    var thtPrice = document.querySelector('.tht-price');
+    var slnPrice = document.querySelector('.sln-price');
+    var xrpPrice = document.querySelector('.xrp-price');
+    var dgcPrice = document.querySelector('.dgc-price');
+    var currency = 'USD';
+    var rate = parseFloat('@ViewBag.Rates[0]'); // Преобразуем строку обратно в число
+
+    function refreshData() {
+        var XHR = new XMLHttpRequest();
+
+        XHR.onreadystatechange = function () {
+            if (XHR.readyState == 4) {
+                var j = XHR.responseText;    
+                var priceInUSD = JSON.parse(j).bpi[currency].rate_float;
+                var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
+                btcPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT'; // Выводим цену в тенге с разделителями между тысячами
+            }
+        }
+
+        XHR.open('GET', 'https://api.coindesk.com/v1/bpi/currentprice.json');
+        XHR.send();
+
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd')
+            .then(response => response.json())
+            .then(data => {
+                var ethereumData = data.find(coin => coin.id === 'ethereum');
+                if (ethereumData) {
+                    var priceInUSD = ethereumData.current_price;
+                    var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
+                    ethPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT';
+                }
+            });
+
+        
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd')
+            .then(response => response.json())
+            .then(data => {
+                var tetherData = data.find(coin => coin.id === 'tether');
+                if (tetherData) {
+                    var priceInUSD = tetherData.current_price;
+                    var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
+                    thtPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT';
+                }
+            });
+
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd')
+            .then(response => response.json())
+            .then(data => {
+                var solanaData = data.find(coin => coin.id === 'solana');
+                if (solanaData) {
+                    var priceInUSD = solanaData.current_price;
+                    var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
+                    slnPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT';
+                }
+            });
+
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd')
+            .then(response => response.json())
+            .then(data => {
+                var XRPData = data.find(coin => coin.id === 'ripple');
+                if (XRPData) {
+                    var priceInUSD = XRPData.current_price;
+                    var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
+                    xrpPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT';
+                }
+            });
+
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd')
+            .then(response => response.json())
+            .then(data => {
+                var DGCData = data.find(coin => coin.id === 'dogecoin');
+                if (DGCData) {
+                    var priceInUSD = DGCData.current_price;
+                    var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
+                    dgcPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT';
+                }
+            });
+
+    }
+
+    // Вызываем функцию refreshData сразу при загрузке страницы
+    refreshData();
+
+    // Затем вызываем функцию refreshData каждую минуту
+    setInterval(refreshData, 60 * 1000);
+</script>
+

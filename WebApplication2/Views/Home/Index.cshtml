@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Главная страница";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Курсы валют</h1>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Валюта</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Изменение за неделю</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var currency in ViewBag.Rates.Keys)
+        {
+            <tr>
+                <td><a href="/Home/Currency/@currency">@currency/KZT</a></td>  <!-- Добавьте ссылку на страницу с графиком -->
+                <td>@DateTime.Now.ToString("dd.MM.yyyy")</td>  <!-- Сегодняшняя дата -->
+                <td>@ViewBag.Rates[currency][0]</td>
+                <td>
+                    @if (ViewBag.WeekChanges[currency] > 0)
+                    {
+                        <span style="color: green;">+@ViewBag.WeekChanges[currency].ToString("F2")</span>
+                    }
+                    else if (ViewBag.WeekChanges[currency] < 0)
+                    {
+                        <span style="color: red;">@ViewBag.WeekChanges[currency].ToString("F2")</span>
+                    }
+                    else
+                    {
+                        <span>@ViewBag.WeekChanges[currency].ToString("F2")</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

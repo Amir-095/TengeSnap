@@ -1,0 +1,84 @@
+﻿@using System.Linq;
+@{
+    ViewData["Title"] = "Данная страница";
+}
+<h1>@ViewBag.Currency/KZT</h1>
+
+<h5><p class="LastCena">Последний курс валюты: @(((List<float>)ViewBag.Rates).Last())</p></h5>
+<p id="specificRate">Выберите дату, чтобы увидеть курс валюты</p>
+<input type="date" id="datePicker" name="datePicker">
+<br />
+
+<button value="7" class="periodButton1">Неделя</button>
+<button value="30" class="periodButton2">Месяц</button>
+<button value="365" class="periodButton3">Год</button>
+<canvas id="myChart" width="100" height="30"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>       
+
+
+<script>
+    var button1 = document.getElementsByClassName('periodButton1')[0];
+    var button2 = document.getElementsByClassName('periodButton2')[0];
+    var button3 = document.getElementsByClassName('periodButton3')[0];
+
+    var buttons = [button1, button2, button3];
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function () {
+            var period = this.value;
+            var currency = '@ViewBag.Currency';  // Получите текущую валюту из ViewBag
+
+            // Если выбрана "Неделя", перенаправьте пользователя на страницу валюты без параметра периода
+            if (period === '7') {
+                window.location.href = '/Home/Currency/' + currency;
+            } else {
+                // В противном случае перенаправьте пользователя на новую страницу с выбранным периодом и валютой
+                window.location.href = '/Home/Currency/' + currency + '?period=' + period;
+            }
+        });
+    }
+
+  
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: @Html.Raw(Json.Serialize(ViewBag.Dates)),  // Даты
+            datasets: [{
+                label: '',  // Используйте код валюты в качестве метки
+                data: @Html.Raw(Json.Serialize(ViewBag.Rates)),  // Курсы валют
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 'dataMin'
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+    document.getElementById('datePicker').addEventListener('change', function () {
+        var date = this.value.split('-').reverse().join('.');  // Преобразуйте формат даты из yyyy-mm-dd в dd.mm.yyyy
+        var currency = '@ViewBag.Currency';  // Получите текущую валюту из ViewBag
+
+        // Сформируйте URL для запроса курса валюты
+        var url = '/Home/GetExchangeRate?date=' + date + '&currencyCode=' + currency;
+
+        // Запросите курс валюты для выбранной даты
+        fetch(url)
+            .then(response => response.text())
+            .then(rate => {
+                // Обновите текст элемента specificRate новым курсом валюты
+                document.getElementById('specificRate').textContent = 'Курс ' + currency + ' за ' + date + ': ' + rate;
+            });
+    });
+</script>

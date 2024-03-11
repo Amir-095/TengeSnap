@@ -1,0 +1,81 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+#myChart{
+    margin-top:30px;
+}
+
+.currency-list {
+    position: fixed;
+    top:65px;
+    right: 20px;
+    list-style-type: none;
+}
+
+    .currency-list li {
+        margin-bottom: 10px;
+    }
+
+    .currency-list a {
+        color: #337ab7;
+        text-decoration: none;
+    }
+
+        .currency-list a:hover {
+            color: #23527c;
+            text-decoration: underline;
+        }
+a {
+    text-decoration: none;
+}
+ 
+#specificRate{
+    margin-bottom:5px;
+}
+.periodButton1{
+    position:fixed;
+    left:520px;
+}
+.periodButton2 {
+    position: fixed;
+    left: 720px;
+}
+.periodButton3 {
+    position: fixed;
+    left: 932px;
+}
+#datePicker{
+    margin-bottom:20px;
+}
+button {
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.2); /* Цвет рамки с прозрачностью */
+    color: inherit; /* Наследование цвета текста от родительского элемента */
+    padding: 5px 10px; /* Подходящие отступы */
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border 0.3s ease-in-out;
+}
+
+    button:hover {
+        background-color: rgba(0, 0, 0, 0.1); /* Цвет фона при наведении с прозрачностью */
+        border: 1px solid rgba(0, 0, 0, 0.5); /* Усиление цвета рамки при наведении */
+    }
