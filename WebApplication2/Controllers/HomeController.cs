@@ -194,38 +194,6 @@ namespace WebApplication2.Controllers
         }
 
 
-        /*
-        [HttpPost]
-        public async Task<IActionResult> Converter(float amount, string toCurrency)
-        {
-            var date = DateTime.Now.ToString("dd.MM.yyyy");
-            var rate = await GetExchangeRate(date, toCurrency); // Используем выбранную пользователем валюту
-            var convertedAmount = amount / rate; // Конвертируем тенге в выбранную валюту
-
-            ViewBag.ConvertedAmount = convertedAmount;
-            return View();
-        }
-        
-[HttpPost]
-public async Task<IActionResult> CrossConverter(float crossAmount, string fromCurrency, string toCurrencyCross)
-{
-    var date = DateTime.Now.ToString("dd.MM.yyyy");
-    var rateFrom = await GetExchangeRate(date, fromCurrency);
-    var rateTo = await GetExchangeRate(date, toCurrencyCross);
-
-    var convertedAmount = (crossAmount / rateTo) * rateFrom;
-
-    ViewBag.ConvertedAmount = convertedAmount;
-    return View("Converter");
-}
-
-*/
-
-
-
-
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
