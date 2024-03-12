@@ -162,7 +162,39 @@ namespace WebApplication2.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> Converter(float amount, string fromCurrency, string toCurrency)
+        {
+            var date = DateTime.Now.ToString("dd.MM.yyyy");
+            float rateFrom;
+            if (fromCurrency == "KZT")
+            {
+                rateFrom = 1;
+            }
+            else
+            {
+                rateFrom = await GetExchangeRate(date, fromCurrency);
+            }
 
+            float convertedAmount;
+            if (toCurrency == "KZT")
+            {
+                // Конвертируем из исходной валюты в тенге
+                convertedAmount = amount * rateFrom;
+            }
+            else
+            {
+                // Конвертируем из тенге в целевую валюту
+                var rateTo = await GetExchangeRate(date, toCurrency);
+                convertedAmount = (amount / rateTo) * rateFrom;
+            }
+
+            ViewBag.ConvertedAmount = convertedAmount;
+            return View();
+        }
+
+
+        /*
         [HttpPost]
         public async Task<IActionResult> Converter(float amount, string toCurrency)
         {
@@ -173,7 +205,7 @@ namespace WebApplication2.Controllers
             ViewBag.ConvertedAmount = convertedAmount;
             return View();
         }
-        /*
+        
 [HttpPost]
 public async Task<IActionResult> CrossConverter(float crossAmount, string fromCurrency, string toCurrencyCross)
 {

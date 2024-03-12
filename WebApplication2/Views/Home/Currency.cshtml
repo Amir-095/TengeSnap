@@ -26,13 +26,13 @@
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', function () {
             var period = this.value;
-            var currency = '@ViewBag.Currency';  // Получите текущую валюту из ViewBag
+            var currency = '@ViewBag.Currency';  
 
-            // Если выбрана "Неделя", перенаправьте пользователя на страницу валюты без параметра периода
+
             if (period === '7') {
                 window.location.href = '/Home/Currency/' + currency;
             } else {
-                // В противном случае перенаправьте пользователя на новую страницу с выбранным периодом и валютой
+
                 window.location.href = '/Home/Currency/' + currency + '?period=' + period;
             }
         });
@@ -44,10 +44,10 @@
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: @Html.Raw(Json.Serialize(ViewBag.Dates)),  // Даты
+            labels: @Html.Raw(Json.Serialize(ViewBag.Dates)), 
             datasets: [{
-                label: '',  // Используйте код валюты в качестве метки
-                data: @Html.Raw(Json.Serialize(ViewBag.Rates)),  // Курсы валют
+                label: '',  
+                data: @Html.Raw(Json.Serialize(ViewBag.Rates)),  
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1
@@ -67,17 +67,17 @@
         }
     });
     document.getElementById('datePicker').addEventListener('change', function () {
-        var date = this.value.split('-').reverse().join('.');  // Преобразуйте формат даты из yyyy-mm-dd в dd.mm.yyyy
-        var currency = '@ViewBag.Currency';  // Получите текущую валюту из ViewBag
+        var date = this.value.split('-').reverse().join('.'); 
+        var currency = '@ViewBag.Currency';  
 
-        // Сформируйте URL для запроса курса валюты
+
         var url = '/Home/GetExchangeRate?date=' + date + '&currencyCode=' + currency;
 
-        // Запросите курс валюты для выбранной даты
+
         fetch(url)
             .then(response => response.text())
             .then(rate => {
-                // Обновите текст элемента specificRate новым курсом валюты
+
                 document.getElementById('specificRate').textContent = 'Курс ' + currency + ' за ' + date + ': ' + rate;
             });
     });

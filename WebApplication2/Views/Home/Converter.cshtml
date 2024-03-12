@@ -49,61 +49,43 @@
 </style>
 
 <h1>Конвертер Валют</h1>
-<center>    <form asp-action="Converter" method="post">
-        <label for="amount">Сумма в тенге:</label>
-        <input type="number" id="amount" name="amount" min="0" step="0.01" required>
+<form asp-action="Converter" method="post">
+    <label for="amount">Сумма:</label>
+    <input type="number" id="amount" name="amount" min="0" step="0.01" required>
 
-        <label for="toCurrency">Конвертировать в:</label>
-        <select id="toCurrency" name="toCurrency" required>
-            <option value="RUB">Российский рубль</option>
-            <option value="EUR">Евро</option>
-            <option value="USD">Доллар США</option>
-            <option value="BYN">Белорусский рубль</option>
-            <option value="CAD">Канадский доллар</option>
-            <option value="CNY">Китайский юань</option>
-            <option value="JPY">Японская иена</option>
-            <option value="KGS">Киргизский сом</option>
-            <option value="AUD">Австралийский доллар</option>
-        </select>
-        <button type="submit">Конвертировать</button>
-    </form>
-</center>
+    <label for="fromCurrency">Из валюты:</label>
+    <select id="fromCurrency" name="fromCurrency" required>
+        <option value="KZT">Тенге</option>
+        <option value="RUB">Российский рубль</option>
+        <option value="EUR">Евро</option>
+        <option value="USD">Доллар США</option>
+        <option value="BYN">Белорусский рубль</option>
+        <option value="CAD">Канадский доллар</option>
+        <option value="CNY">Китайский юань</option>
+        <option value="JPY">Японская иена</option>
+        <option value="KGS">Киргизский сом</option>
+        <option value="AUD">Австралийский доллар</option>
+    </select>
 
-    <!--
-    <form asp-action="CrossConverter" method="post">
-        <label for="crossAmount">Сумма:</label>
-        <input type="number" id="crossAmount" name="crossAmount" min="0" step="0.01" required>
+    <label for="toCurrency">В валюту:</label>
+    <select id="toCurrency" name="toCurrency" required>
+        <option value="KZT">Тенге</option>
+        <option value="RUB">Российский рубль</option>
+        <option value="EUR">Евро</option>
+        <option value="USD">Доллар США</option>
+        <option value="BYN">Белорусский рубль</option>
+        <option value="CAD">Канадский доллар</option>
+        <option value="CNY">Китайский юань</option>
+        <option value="JPY">Японская иена</option>
+        <option value="KGS">Киргизский сом</option>
+        <option value="AUD">Австралийский доллар</option>
+    </select>
 
-        <label for="fromCurrency">Из валюты:</label>
-        <select id="fromCurrency" name="fromCurrency" required>
-            <option value="RUB">Российский рубль</option>
-            <option value="EUR">Евро</option>
-            <option value="USD">Доллар США</option>
-            <option value="BYN">Белорусский рубль</option>
-            <option value="CAD">Канадский доллар</option>
-            <option value="CNY">Китайский юань</option>
-            <option value="JPY">Японская иена</option>
-            <option value="KGS">Киргизский сом</option>
-            <option value="AUD">Австралийский доллар</option>
-        </select>
-
-        <label for="toCurrencyCross">В валюту:</label>
-        <select id="toCurrencyCross" name="toCurrencyCross" required>
-            <option value="RUB">Российский рубль</option>
-            <option value="EUR">Евро</option>
-            <option value="USD">Доллар США</option>
-            <option value="BYN">Белорусский рубль</option>
-            <option value="CAD">Канадский доллар</option>
-            <option value="CNY">Китайский юань</option>
-            <option value="JPY">Японская иена</option>
-            <option value="KGS">Киргизский сом</option>
-            <option value="AUD">Австралийский доллар</option>
-        </select>
-
-        <button type="submit">Конвертировать</button>
-    </form>-->
+    <button type="submit">Конвертировать</button>
+</form>
 
 @if (ViewBag.ConvertedAmount != null)
 {
-    <div class="converted-amount">Сконвертированная сумма: @ViewBag.ConvertedAmount</div>
+    <p>Сконвертированная сумма: @ViewBag.ConvertedAmount</p>
 }
+

@@ -18,8 +18,8 @@
         @foreach (var currency in ViewBag.Rates.Keys)
         {
             <tr>
-                <td><a href="/Home/Currency/@currency">@currency/KZT</a></td>  <!-- Добавьте ссылку на страницу с графиком -->
-                <td>@DateTime.Now.ToString("dd.MM.yyyy")</td>  <!-- Сегодняшняя дата -->
+                <td><a href="/Home/Currency/@currency">@currency/KZT</a></td> 
+                <td>@DateTime.Now.ToString("dd.MM.yyyy")</td> 
                 <td>@ViewBag.Rates[currency][0]</td>
                 <td>
                     @if (ViewBag.WeekChanges[currency] > 0)

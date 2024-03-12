@@ -45,7 +45,7 @@
     var xrpPrice = document.querySelector('.xrp-price');
     var dgcPrice = document.querySelector('.dgc-price');
     var currency = 'USD';
-    var rate = parseFloat('@ViewBag.Rates[0]'); // Преобразуем строку обратно в число
+    var rate = parseFloat('@ViewBag.Rates[0]');
 
     function refreshData() {
         var XHR = new XMLHttpRequest();
@@ -54,8 +54,8 @@
             if (XHR.readyState == 4) {
                 var j = XHR.responseText;    
                 var priceInUSD = JSON.parse(j).bpi[currency].rate_float;
-                var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
-                btcPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT'; // Выводим цену в тенге с разделителями между тысячами
+                var priceInTenge = priceInUSD * rate;
+                btcPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT'; 
             }
         }
 
@@ -68,7 +68,7 @@
                 var ethereumData = data.find(coin => coin.id === 'ethereum');
                 if (ethereumData) {
                     var priceInUSD = ethereumData.current_price;
-                    var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
+                    var priceInTenge = priceInUSD * rate; 
                     ethPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT';
                 }
             });
@@ -80,7 +80,7 @@
                 var tetherData = data.find(coin => coin.id === 'tether');
                 if (tetherData) {
                     var priceInUSD = tetherData.current_price;
-                    var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
+                    var priceInTenge = priceInUSD * rate; 
                     thtPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT';
                 }
             });
@@ -91,7 +91,7 @@
                 var solanaData = data.find(coin => coin.id === 'solana');
                 if (solanaData) {
                     var priceInUSD = solanaData.current_price;
-                    var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
+                    var priceInTenge = priceInUSD * rate; 
                     slnPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT';
                 }
             });
@@ -102,7 +102,7 @@
                 var XRPData = data.find(coin => coin.id === 'ripple');
                 if (XRPData) {
                     var priceInUSD = XRPData.current_price;
-                    var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
+                    var priceInTenge = priceInUSD * rate; 
                     xrpPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT';
                 }
             });
@@ -113,17 +113,16 @@
                 var DGCData = data.find(coin => coin.id === 'dogecoin');
                 if (DGCData) {
                     var priceInUSD = DGCData.current_price;
-                    var priceInTenge = priceInUSD * rate; // Умножаем цену в долларах на курс валюты
+                    var priceInTenge = priceInUSD * rate;
                     dgcPrice.innerText = priceInTenge.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' KZT';
                 }
             });
 
     }
 
-    // Вызываем функцию refreshData сразу при загрузке страницы
+
     refreshData();
 
-    // Затем вызываем функцию refreshData каждую минуту
     setInterval(refreshData, 60 * 1000);
 </script>
 
